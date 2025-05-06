@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.container strong {
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+}
+
+.container span {
+  font-size: 0.75rem;
+  background: var(--gray-400);
+  border-radius: 50%;
+  padding: 0.125rem 0.5rem;
+  color: var(--gray-200);
+}
+
+.createdTasks {
+  color: var(--blue);
+}
+
+.completedTasks {
+  color: var(--purple);
+}

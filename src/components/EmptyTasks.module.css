@@ -1,0 +1,16 @@
+.container {
+  border-radius: 8px;
+  border: 1px solid var(--gray-400);
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  color: var(--gray-300);
+  max-height: 15.25rem;
+  height: 15.25rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
