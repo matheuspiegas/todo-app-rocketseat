@@ -1,52 +1,52 @@
-import { Header } from './components/Header'
-import styles from './App.module.css'
-import { CreateTaskInput } from './components/CreateTaskInput'
-import { TasksInfo } from './components/TasksInfo'
-// import { EmptyTasks } from './components/EmptyTasks'
-import { Task } from './components/Task'
-import { TaskType } from '../types/index'
-import { useState } from 'react'
-import { EmptyTasks } from './components/EmptyTasks'
+import { Header } from "./components/Header";
+import styles from "./App.module.css";
+import { CreateTaskInput } from "./components/CreateTaskInput";
+import { TasksInfo } from "./components/TasksInfo";
+import { Task } from "./components/Task";
+import { v4 as uuidv4 } from "uuid";
+import { TaskType } from "../types/index";
+import { useEffect, useState } from "react";
+import { EmptyTasks } from "./components/EmptyTasks";
 
 function App() {
+  const [tasks, setTasks] = useState<TaskType[]>(
+    JSON.parse(localStorage.getItem("@todo-app:todos-state-1.0.0") || "[]")
+  );
 
-  const [tasks, setTasks] = useState<TaskType[]>([
-    {
-      id: crypto.randomUUID(),
-      name: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer. Matheus Sales Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer. Matheus Sales Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer. Matheus Sales',
-      isCompleted: false
-    },
-  ])
+  useEffect(() => {
+    const stringJSON = JSON.stringify(tasks);
+    localStorage.setItem("@todo-app:todos-state-1.0.0", stringJSON);
+  }, [tasks]);
 
-  const totalTasks = tasks.length
-  const concludedTasks = tasks.filter((task) => task.isCompleted).length
+  const totalTasks = tasks.length;
+  const concludedTasks = tasks.filter((task) => task.isCompleted).length;
 
   function handleCreateTask(content: string) {
     setTasks((tasks) => {
       return [
         ...tasks,
         {
-          id: crypto.randomUUID(),
+          id: uuidv4(),
           name: content,
-          isCompleted: false
-        }
-      ]
-    })
+          isCompleted: false,
+        },
+      ];
+    });
   }
 
   function handleCompleteTask(id: string) {
     const updatedTasks = tasks.map((task) => {
-      if (task.id === id) return { ...task, isCompleted: !task.isCompleted }
+      if (task.id === id) return { ...task, isCompleted: !task.isCompleted };
 
-      return { ...task }
-    })
+      return { ...task };
+    });
 
-    setTasks(updatedTasks)
+    setTasks(updatedTasks);
   }
 
   function handleDeleteTask(id: string) {
-    const updatedTasks = tasks.filter((task) => task.id !== id)
-    setTasks(updatedTasks)
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
   }
 
   return (
@@ -56,13 +56,22 @@ function App() {
         <CreateTaskInput onCreateTask={handleCreateTask} />
         <TasksInfo concluded={concludedTasks} created={totalTasks} />
         <div>
-          {
-            tasks.length > 0 ? tasks.map((task) => <Task onComplete={handleCompleteTask} onDelete={handleDeleteTask} task={task} key={task.id} />) : <EmptyTasks />
-          }
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <Task
+                onComplete={handleCompleteTask}
+                onDelete={handleDeleteTask}
+                task={task}
+                key={task.id}
+              />
+            ))
+          ) : (
+            <EmptyTasks />
+          )}
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
