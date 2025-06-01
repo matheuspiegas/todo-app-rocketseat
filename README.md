@@ -1,2 +1,2 @@
 # Try it out
-[Todo app](https://matheuspiegastodo.netlify.app/)
+<a href="https://matheuspiegastodo.netlify.app/" target="_blank">Todo app</a>
